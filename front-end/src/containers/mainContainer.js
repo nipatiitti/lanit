@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import { getPosts } from '../actions/getPosts'
+import { removeDocument } from '../actions/postAction'
 import { login } from '../actions/utils'
 
 import Main from '../components/Main'
@@ -21,6 +22,9 @@ const mapDispatchToProps = (dispatch) => {
     ),
     login: ( password ) => (
       dispatch(login(password))
+    ),
+    removeDocument: ( id ) => (
+      dispatch(removeDocument( id ))
     )
   }
 }

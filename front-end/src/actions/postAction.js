@@ -37,19 +37,58 @@ export const newPost = ( postObject ) => {
   }
 }
 
-export const addMatch = ( id, team1, team2, time ) => {
+export const addMatch = ( id, team1, team2, time, _id ) => {
   return (dispatch) => {
-    console.log("here");
     dispatch(loading(true))
     axios.post(`${baseUrl}/api/items/${id}`, {
       type: 'match',
       team1,
       team2,
-      time
+      time,
+      _id
     })
     .then(({data}) => {
-      console.log(data);
+      console.log(data)
       dispatch(openItem(data))
+      dispatch(loading(false))
+    })
+    .catch(e => {
+      console.log(e)
+      dispatch(loading(false))
+      dispatch(error(e.response))
+    })
+  }
+}
+
+export const removeDocument = ( id ) => {
+  return (dispatch) => {
+    dispatch(loading(true))
+    axios.post(`${baseUrl}/api/items/${id}`, {
+      deleteOperation: true,
+      item: false
+    })
+    .then(({data}) => {
+      console.log(data)
+      dispatch(loading(false))
+    })
+    .catch(e => {
+      console.log(e)
+      dispatch(loading(false))
+      dispatch(error(e.response))
+    })
+  }
+}
+
+export const removeMatch = ( id, itemId ) => {
+  return (dispatch) => {
+    dispatch(loading(true))
+    axios.post(`${baseUrl}/api/items/${id}`, {
+      deleteOperation: true,
+      item: true,
+      itemId
+    })
+    .then(({data}) => {
+      console.log(data)
       dispatch(loading(false))
     })
     .catch(e => {

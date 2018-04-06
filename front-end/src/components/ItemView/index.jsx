@@ -31,7 +31,7 @@ class ItemView extends Component {
   addMatch() {
     const { team1, team2, time } = this.state
 
-    this.props.addMatch(this.props.match.params.id, team1, team2, time )
+    this.props.addMatch(this.props.match.params.id, team1, team2, time, this.makeid() )
 
     this.setState({
       team1: '',
@@ -39,6 +39,21 @@ class ItemView extends Component {
       time: ''
     })
   }
+
+  makeid() {
+    let text = ""
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+    for (let i = 0; i < 9; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length))
+
+    return text
+  }
+
+  deleteMatch(_id) {
+    this.props.removeMatch(this.props.match.params.id, _id)
+  }
+
 
   render() {
     const { data, loading, admin } = this.props
@@ -63,12 +78,19 @@ class ItemView extends Component {
               placeholder="time"
               value={this.state.time}
             />
-          <Button text="Add new" onClick={() => this.addMatch()}/>
+
+            <Button text="Add new" onClick={() => this.addMatch()}/>
           </div>
         }
         {
           !loading && data.matches && data.matches.map(match => (
-            <Text text={`${match.team1} vs ${match.team2} at ${match.time}`} />
+            <div key={match._id}>
+              <Text text={`${match.team1} vs ${match.team2} at ${match.time}`} />
+              {
+                admin &&
+                <Button text="Delete" onClick={() => this.deleteMatch(match._id)}/>
+              }
+            </div>
           ))
         }
       </div>

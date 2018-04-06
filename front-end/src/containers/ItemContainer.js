@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import { getById } from '../actions/getPosts'
-import { addMatch } from '../actions/postAction'
+import { addMatch, removeMatch } from '../actions/postAction'
 
 import ItemView from '../components/ItemView'
 
@@ -19,8 +19,11 @@ const mapDispatchToProps = (dispatch) => {
     getById: ( id ) => (
       dispatch(getById( id ))
     ),
-    addMatch: ( id, team1, team2, time ) => (
-      dispatch(addMatch( id, team1, team2, time ))
+    addMatch: ( id, team1, team2, time, _id ) => (
+      dispatch(addMatch( id, team1, team2, time, _id ))
+    ),
+    removeMatch: ( id, itemId ) => (
+      dispatch(removeMatch( id, itemId ))
     )
   }
 }

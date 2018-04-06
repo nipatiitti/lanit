@@ -53,7 +53,12 @@ class Main extends Component {
             />
         }
         {!loading && data.map(item => (
-          <PostItem {...item} key={item._id} onClick={() => history.push(`/items/${item._id}`)} />
+          <PostItem
+            {...item}
+            key={item._id}
+            onClick={() => history.push(`/items/${item._id}`)}
+            admin={admin}
+            deleteThis={this.props.removeDocument}/>
         ))}
       </div>
     )
